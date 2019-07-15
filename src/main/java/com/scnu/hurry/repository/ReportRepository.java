@@ -12,32 +12,32 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ReportRepository extends JpaRepository<Report, Integer> {
 
     /**
-     * 查询本周数据
+     * 用户查询本周数据
      * @param pageable
      * @return
      */
     @Transactional
-    @Query(value = "SELECT * FROM report WHERE TO_DAYS(time) = TO_DAYS(NOW())",nativeQuery = true)
-    Page<Report> findToday(Pageable pageable);
+    @Query(value = "SELECT * FROM report WHERE user_id = ? and TO_DAYS(time) = TO_DAYS(NOW())",nativeQuery = true)
+    Page<Report> findToday(Integer userId, Pageable pageable);
 
     /**
-     * 查询本周数据
+     * 用户查询本周数据
      * @param pageable
      * @return
      */
     @Transactional
-    @Query(value = "SELECT * FROM report WHERE " +
+    @Query(value = "SELECT * FROM report WHERE user_id = ? and " +
             "YEARWEEK(date_format(time,'%Y-%m-%d')) = YEARWEEK(now())", nativeQuery = true)
-    Page<Report> findThisWeek(Pageable pageable);
+    Page<Report> findThisWeek(Integer userId, Pageable pageable);
 
     /**
-     * 查询本月数据
+     * 用户查询本月数据
      * @param pageable
      * @return
      */
     @Transactional
-    @Query(value = "SELECT * FROM report WHERE " +
+    @Query(value = "SELECT * FROM report WHERE user_id = ? and " +
             "DATE_FORMAT( time, '%Y%m' ) = DATE_FORMAT( CURDATE() , '%Y%m' )", nativeQuery = true)
-    Page<Report> findThisMonth(Pageable pageable);
+    Page<Report> findThisMonth(Integer userId, Pageable pageable);
 
 }
