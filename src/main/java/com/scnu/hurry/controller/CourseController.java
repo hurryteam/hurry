@@ -32,9 +32,10 @@ public class CourseController {
     @ApiOperation(value = "", notes = "根据索引与数量获取课程列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "size" , value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
+            @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
-    List<Course> getCourseList(@RequestParam("index") int index, @RequestParam("size") int size) throws HurryException{
+    List<Course> getCourseList(@RequestParam("index") int index,
+                               @RequestParam("size") int size) throws HurryException {
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
@@ -48,11 +49,13 @@ public class CourseController {
     @RequestMapping(value = "/select", method = RequestMethod.POST)
     @ApiOperation(value = "/select", notes = "查询用户选中的课程")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid" , value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "index" , value = "请求的索引", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "size" , value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
+            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
-    List<Course> getCourse(@RequestParam("openid") String openid, int index, int size) throws HurryException{
+    List<Course> getCourse(@RequestParam("openid") String openid,
+                           @RequestParam("index") int index,
+                           @RequestParam("size") int size) throws HurryException {
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
