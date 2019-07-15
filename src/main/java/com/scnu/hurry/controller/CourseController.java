@@ -1,9 +1,13 @@
 package com.scnu.hurry.controller;
 
+import com.scnu.hurry.Enum.ResultEnum;
+import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.entity.Course;
 import com.scnu.hurry.service.Impl.CourseServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,14 +28,21 @@ public class CourseController {
     @Autowired
     CourseServiceImpl courseService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    @ApiOperation(value = "/", notes = "根据索引与数量获取课程列表")
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    @ApiOperation(value = "", notes = "根据索引与数量获取课程列表")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size" , value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
-    List<Course> getCourseList(@RequestParam("index") int index, @RequestParam("size") int size) {
-        return null;
+    List<Course> getCourseList(@RequestParam("index") int index, @RequestParam("size") int size) throws HurryException{
+        if (size < 0) {
+            throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
+        }
+        if (index < 0) {
+            throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
+        }
+        Pageable pageRequest = PageRequest.of(index, size);
+        return courseService.findAll(pageRequest).getContent();
     }
 
     @RequestMapping(value = "/select", method = RequestMethod.POST)
@@ -41,7 +52,17 @@ public class CourseController {
             @ApiImplicitParam(name = "index" , value = "请求的索引", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size" , value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
-    Course getCourse(@RequestParam("openid") String openid, int index, int size) {
-       return null;
+    List<Course> getCourse(@RequestParam("openid") String openid, int index, int size) throws HurryException{
+        if (size < 0) {
+            throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
+        }
+        if (index < 0) {
+            throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
+        }
+        if (openid == "") {
+            throw new HurryException(ResultEnum.USER_ID_ERROR);
+        }
+        Pageable pageRequest = PageRequest.of(index, size);
+        return courseService.findUserCourse(openid, pageRequest).getContent();
     }
 }
