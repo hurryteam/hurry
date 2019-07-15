@@ -23,14 +23,14 @@ public class ReportRepositoryTest {
     @Test
     public void findToday() {
         Pageable pageable = PageRequest.of(0,2);
-        Page<Report> today = repository.findToday(pageable);
+        Page<Report> today = repository.findToday(1,pageable);
         today.getContent().forEach(System.out::println);
     }
 
     @Test
     public void findThisWeek(){
         Pageable pageable = PageRequest.of(0,10);
-        Page<Report> week = repository.findThisWeek(pageable);
+        Page<Report> week = repository.findThisWeek(1,pageable);
         week.getContent().forEach(System.out::println);
     }
 
@@ -38,7 +38,7 @@ public class ReportRepositoryTest {
     @Test
     public void findThisMonth(){
         Pageable pageable = PageRequest.of(0,10);
-        Page<Report> week = repository.findThisMonth(pageable);
+        Page<Report> week = repository.findThisMonth(1,pageable);
         week.getContent().forEach(System.out::println);
     }
 }
