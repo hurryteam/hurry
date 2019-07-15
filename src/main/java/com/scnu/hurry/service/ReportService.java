@@ -3,13 +3,14 @@ package com.scnu.hurry.service;
 
 import com.scnu.hurry.entity.Report;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface ReportService {
 
-    Page<Report> findToday(Integer userId, Pageable pageable);
+    List<Report> findToday(Integer userId);
 
-    Page<Report> findThisWeek(Integer userId, Pageable pageable);
+    List<Report> findThisWeek(Integer userId);
 
-    Page<Report> findThisMonth(Integer userId, Pageable pageable);
+    List<Report> findThisMonth(Integer userId);
 }

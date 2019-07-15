@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ReportRepositoryTest {
@@ -18,22 +21,20 @@ public class ReportRepositoryTest {
     @Test
     public void findToday() {
         Pageable pageable = PageRequest.of(0,2);
-        Page<Report> today = repository.findToday(1,pageable);
-        today.getContent().forEach(System.out::println);
+        List<Report> today = repository.findToday(1);
+        today.forEach(System.out::println);
     }
 
     @Test
     public void findThisWeek(){
-        Pageable pageable = PageRequest.of(0,10);
-        Page<Report> week = repository.findThisWeek(1,pageable);
-        week.getContent().forEach(System.out::println);
+        List<Report> week = repository.findThisWeek(1);
+        week.forEach(System.out::println);
     }
 
 
     @Test
     public void findThisMonth(){
-        Pageable pageable = PageRequest.of(0,10);
-        Page<Report> week = repository.findThisMonth(1,pageable);
-        week.getContent().forEach(System.out::println);
+        List<Report> week = repository.findThisMonth(1);
+        week.forEach(System.out::println);
     }
 }
