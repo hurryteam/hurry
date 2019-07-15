@@ -14,4 +14,12 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
      * @return
      */
     Page<Question> findAll(Pageable pageable);
+
+    /**
+     * 用户查询自己的回答
+     * @param userId
+     * @param pageable
+     * @return
+     */
+    Page<Question> findByUserId(Integer userId, Pageable pageable);
 }

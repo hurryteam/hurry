@@ -15,9 +15,9 @@ public interface CourseService {
 
     /**
      * 查询用户自己选择的课程
-     * @param userId
+     * @param openid
      * @param pageable
      * @return
      */
-    Page<Course> findUserCourse(Integer userId, Pageable pageable);
+    Page<Course> findUserCourse(String openid, Pageable pageable);
 }

@@ -27,7 +27,7 @@ public class CourseServiceImplTest {
     @Test
     public void findUserCourse() {
         Pageable pageable = PageRequest.of(0,10);
-        Page<Course> userCourse = courseService.findUserCourse(2, pageable);
+        Page<Course> userCourse = courseService.findUserCourse("151551", pageable);
         userCourse.getContent().forEach(System.out::println);
     }
 }
