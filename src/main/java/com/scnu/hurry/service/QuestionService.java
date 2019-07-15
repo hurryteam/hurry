@@ -1,22 +1,21 @@
-package com.scnu.hurry.repository;
+package com.scnu.hurry.service;
 
 import com.scnu.hurry.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
+public interface QuestionService {
+
     /**
-     * 请求帖子
+     * 查询问题
+     *
      * @param pageable
      * @return
      */
     Page<Question> findAll(Pageable pageable);
 
     /**
-     * 用户查询自己的回答
+     * 用户查询自己的问题
      * @param userId
      * @param pageable
      * @return
