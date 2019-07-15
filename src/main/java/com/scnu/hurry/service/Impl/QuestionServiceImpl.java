@@ -1,7 +1,11 @@
 package com.scnu.hurry.service.Impl;
 
+import com.scnu.hurry.Enum.ResultEnum;
+import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.entity.Question;
+import com.scnu.hurry.entity.UserInfo;
 import com.scnu.hurry.repository.QuestionRepository;
+import com.scnu.hurry.repository.UserInfoRepository;
 import com.scnu.hurry.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,10 @@ public class QuestionServiceImpl implements QuestionService {
      */
     @Autowired
     private QuestionRepository repository;
+
+    @Autowired
+    private UserInfoRepository userInfoRepository;
+
     @Override
     public Page<Question> findAll(Pageable pageable) {
         return repository.findAll(pageable);
@@ -26,12 +34,16 @@ public class QuestionServiceImpl implements QuestionService {
 
     /**
      * 用户查询自己的问题
-     * @param userId
+     * @param openid
      * @param pageable
      * @return
      */
     @Override
-    public Page<Question> findByUserId(Integer userId, Pageable pageable) {
+    public Page<Question> findByUserId(String openid, Pageable pageable) {
+        UserInfo user = userInfoRepository.findByOpenid(openid);
+        if (user == null)
+            throw new HurryException(ResultEnum.USER_NOT_FOUND);
+        Integer userId = user.getUserId();
         return repository.findByUserId(userId, pageable);
     }
 }

@@ -16,9 +16,9 @@ public interface QuestionService {
 
     /**
      * 用户查询自己的问题
-     * @param userId
+     * @param openid
      * @param pageable
      * @return
      */
-    Page<Question> findByUserId(Integer userId, Pageable pageable);
+    Page<Question> findByUserId(String openid, Pageable pageable);
 }

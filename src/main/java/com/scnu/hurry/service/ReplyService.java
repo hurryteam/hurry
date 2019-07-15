@@ -16,10 +16,10 @@ public interface ReplyService {
 
     /**
      * 根据用户查找回复
-     * @param userId
+     * @param openid
      * @param pageable
      * @return
      */
-    Page<Reply> findQuestionByUserId(Integer userId, Pageable pageable);
+    Page<Reply> findReplyByUserId(String openid, Pageable pageable);
 
 }
