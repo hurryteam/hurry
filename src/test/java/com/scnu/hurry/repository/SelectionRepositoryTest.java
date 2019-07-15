@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -29,7 +31,7 @@ public class SelectionRepositoryTest {
     @Test
     public void findAllByUserId() {
         Pageable pageable = PageRequest.of(0, 2);
-        Page<Selection> selectionPage = repository.findAllByUserId(1, pageable);
-        selectionPage.getContent().forEach(System.out::println);
+        List<Selection> selectionPage = repository.findAllByUserId(1);
+        selectionPage.forEach(System.out::println);
     }
 }

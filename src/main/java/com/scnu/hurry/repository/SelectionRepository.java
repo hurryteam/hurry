@@ -7,13 +7,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface SelectionRepository extends JpaRepository<Selection, Integer> {
 
     /**
      * 根据用户选择的课程
-     * @param pageable
      * @return
      */
-    Page<Selection> findAllByUserId(Integer userId, Pageable pageable);
+    List<Selection> findAllByUserId(Integer userId);
 }
