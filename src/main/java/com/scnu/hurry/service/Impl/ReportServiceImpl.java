@@ -4,9 +4,9 @@ import com.scnu.hurry.entity.Report;
 import com.scnu.hurry.repository.ReportRepository;
 import com.scnu.hurry.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -16,18 +16,18 @@ public class ReportServiceImpl implements ReportService {
     private ReportRepository repository;
 
     @Override
-    public Page<Report> findToday(Integer userId, Pageable pageable) {
-        return repository.findToday(userId,pageable);
+    public List<Report> findToday(Integer userId) {
+        return repository.findToday(userId);
     }
 
     @Override
-    public Page<Report> findThisWeek(Integer userId, Pageable pageable) {
+    public List<Report> findThisWeek(Integer userId) {
 
-        return repository.findThisWeek(userId, pageable);
+        return repository.findThisWeek(userId);
     }
 
     @Override
-    public Page<Report> findThisMonth(Integer userId, Pageable pageable) {
-        return repository.findThisMonth(userId, pageable);
+    public List<Report> findThisMonth(Integer userId) {
+        return repository.findThisMonth(userId);
     }
 }
