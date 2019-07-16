@@ -41,7 +41,7 @@ public class ReportController {
 
 
     @RequestMapping(value = "/week", method = RequestMethod.POST)
-    @ApiOperation(value = "返回这周的报告")
+    @ApiOperation(value = "返回这个周的报告")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true)
     })

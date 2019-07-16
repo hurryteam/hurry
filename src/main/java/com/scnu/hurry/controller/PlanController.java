@@ -23,7 +23,7 @@ public class PlanController {
     PlanServiceImpl planService;
 
     @RequestMapping(value = "/plan", method = RequestMethod.POST)
-    @ApiOperation(value = "根据用户openid返回用户计划")
+    @ApiOperation(value = "根据用户openid返回用户今天的计划限制烟数")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
     })
