@@ -21,17 +21,17 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(value = "回答查询控制器")
+@Api(value = "回答")
 public class ReplyController {
 
     @Autowired
     ReplyServiceImpl replyService;
 
     @RequestMapping(value = "/reply", method = RequestMethod.POST)
-    @ApiOperation(value = "查询自己的回答", notes = "根据用户的openid传回size个回复")
+    @ApiOperation(value = "查询用户自己的回答", notes = "根据用户的openid传回size个回复")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
     List<Reply> findAllReply(@RequestParam("openid") String openid,
@@ -54,7 +54,7 @@ public class ReplyController {
     @ApiOperation(value = "根据问题id查找回复", notes = "每次返回3条")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "questionId", value = "问题的openid", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
     })
     List<Reply> findReplyByQuestionId(@RequestParam("questionId") int questionId,
                                       @RequestParam("index") int index) {

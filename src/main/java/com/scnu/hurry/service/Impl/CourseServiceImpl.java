@@ -38,9 +38,6 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Page<Course> findUserCourse(String openid, Pageable pageable) {
         UserInfo user = userInfoRepository.findByOpenid(openid);
-        if (user == null) {
-            throw new HurryException(ResultEnum.USER_NOT_FOUND);
-        }
         Integer userId = user.getUserId();
         //得到用户的选课
         List<Selection> userSelection = selectionRepository.findAllByUserId(userId);

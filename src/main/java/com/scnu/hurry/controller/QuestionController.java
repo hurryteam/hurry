@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/question")
-@Api(value = "请求问题(帖子)")
+@Api(value = "问题(帖子)")
 public class QuestionController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class QuestionController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ApiOperation(value = "返回所有的问题")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
     List<Question> getQuestions(@RequestParam("index") int index,
@@ -50,7 +50,7 @@ public class QuestionController {
     @ApiOperation(value = "根据用户查询其发布的问题")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size", value = "返回的数量", dataType = "int", paramType = "query", defaultValue = "3"),
     })
     List<Question> getQustionsByUserId(@RequestParam("openid") String openid,

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/course")
-@Api(value = "/course")
+@Api(value = "课程")
 public class CourseController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class CourseController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ApiOperation(value = "", notes = "根据索引与数量获取课程列表")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
     List<Course> getCourseList(@RequestParam("index") int index,
@@ -50,7 +50,7 @@ public class CourseController {
     @ApiOperation(value = "/select", notes = "查询用户选中的课程")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
     List<Course> getCourse(@RequestParam("openid") String openid,

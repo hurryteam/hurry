@@ -35,7 +35,7 @@ public class CourseRepositoryTest {
 
     @Test
     public void findAll() {
-        Pageable pageable = PageRequest.of(1, 2);
+        Pageable pageable = PageRequest.of(0, 2);
         Page<Course> courses = repository.findAll(pageable);
         courses.getContent().forEach(System.out::println);
         assertNotNull(courses);
