@@ -20,15 +20,19 @@ public class ReportServiceImplTest {
     private ReportService service;
     @Test
     public void findToday() {
-        List<Report> today = service.findToday("151551");
+        List<Integer> today = service.findToday("151551");
         today.forEach(System.out::println);
     }
 
     @Test
     public void findThisWeek() {
+        List<Integer> today = service.findThisWeek("151551");
+        today.forEach(System.out::println);
     }
 
     @Test
     public void findThisMonth() {
+        List<Integer> today = service.findThisMonth("151551");
+        today.forEach(System.out::println);
     }
 }

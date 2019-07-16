@@ -7,9 +7,12 @@ import com.scnu.hurry.entity.UserInfo;
 import com.scnu.hurry.repository.ReportRepository;
 import com.scnu.hurry.repository.UserInfoRepository;
 import com.scnu.hurry.service.ReportService;
+import com.scnu.hurry.util.TimeHandleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -22,29 +25,31 @@ public class ReportServiceImpl implements ReportService {
     private UserInfoRepository userInfoRepository;
 
     @Override
-    public List<Report> findToday(String openid) {
+    public List<Integer> findToday(String openid) {
         UserInfo user = userInfoRepository.findByOpenid(openid);
         if (user == null)
             throw new HurryException(ResultEnum.USER_NOT_FOUND);
         Integer userId = user.getUserId();
-        return repository.findToday(userId);
+        return TimeHandleUtil.splitDayTo24Hours(repository.findToday(userId));
     }
 
     @Override
-    public List<Report> findThisWeek(String openid) {
+    public List<Integer> findThisWeek(String openid) {
         UserInfo user = userInfoRepository.findByOpenid(openid);
         if (user == null)
             throw new HurryException(ResultEnum.USER_NOT_FOUND);
         Integer userId = user.getUserId();
-        return repository.findThisWeek(userId);
+        List<Report> reportList = repository.findThisWeek(userId);
+        return TimeHandleUtil.splitWeekToDay(reportList);
     }
 
     @Override
-    public List<Report> findThisMonth(String openid) {
+    public List<Integer> findThisMonth(String openid) {
         UserInfo user = userInfoRepository.findByOpenid(openid);
         if (user == null)
             throw new HurryException(ResultEnum.USER_NOT_FOUND);
         Integer userId = user.getUserId();
-        return repository.findThisMonth(userId);
+        List<Report> reportList = repository.findThisMonth(userId);
+        return TimeHandleUtil.splitMonthTo4Week(reportList);
     }
 }
