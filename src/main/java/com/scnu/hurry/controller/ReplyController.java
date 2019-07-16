@@ -50,7 +50,7 @@ public class ReplyController {
         return replyService.findReplyByUserId(openid, pageRequest).getContent();
     }
 
-    @RequestMapping(value = "/question", method = RequestMethod.GET)
+    @RequestMapping(value = "/reply/question", method = RequestMethod.GET)
     @ApiOperation(value = "根据问题id查找回复", notes = "每次返回3条")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "questionId", value = "问题的openid", dataType = "int", paramType = "query", required = true),
