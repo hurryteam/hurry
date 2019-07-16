@@ -27,7 +27,7 @@ public class ReplyController {
     @Autowired
     ReplyServiceImpl replyService;
 
-    @RequestMapping(value = "/reply", method = RequestMethod.GET)
+    @RequestMapping(value = "/reply", method = RequestMethod.POST)
     @ApiOperation(value = "查询自己的回答", notes = "根据用户的openid传回size个回复")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
@@ -43,10 +43,30 @@ public class ReplyController {
         if (index < 0) {
             throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
         }
-        if (openid == "") {
+        if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
         Pageable pageRequest = new PageRequest(index, size);
         return replyService.findReplyByUserId(openid, pageRequest).getContent();
     }
+
+    @RequestMapping(value = "/question", method = RequestMethod.GET)
+    @ApiOperation(value = "根据问题id查找回复", notes = "每次返回3条")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "questionId", value = "问题的openid", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "index", value = "请求的索引", dataType = "int", paramType = "query", required = true),
+    })
+    List<Reply> findReplyByQuestionId(@RequestParam("questionId") int questionId,
+                                      @RequestParam("index") int index) {
+        if (questionId < 0) {
+            throw new HurryException(ResultEnum.QUESTION_ID_VALUE_ERROR);
+        }
+        if (index < 0) {
+            throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
+        }
+        Pageable pageRequest = new PageRequest(index, 3);
+        return replyService.findByQuestionId(questionId, pageRequest).getContent();
+    }
+
+
 }

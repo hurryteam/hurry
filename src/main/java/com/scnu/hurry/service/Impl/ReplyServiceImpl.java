@@ -28,7 +28,9 @@ public class ReplyServiceImpl implements ReplyService {
      */
     @Override
     public Page<Reply> findByQuestionId(Integer questionId, Pageable pageable) {
-
+        if (!repository.findById(questionId).isPresent()) {
+            throw new HurryException(ResultEnum.QUESTION_NOT_FIND);
+        }
         return repository.findByQuestionId(questionId, pageable);
     }
 
