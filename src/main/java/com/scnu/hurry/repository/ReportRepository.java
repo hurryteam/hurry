@@ -1,8 +1,7 @@
 package com.scnu.hurry.repository;
 
 import com.scnu.hurry.entity.Report;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,15 +14,13 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 
     /**
      * 用户查询本周数据
-     * @return
      */
     @Transactional
-    @Query(value = "SELECT * FROM report WHERE user_id = ? and TO_DAYS(time) = TO_DAYS(NOW())",nativeQuery = true)
+    @Query(value = "SELECT * FROM report WHERE user_id = ? and TO_DAYS(time) = TO_DAYS(NOW())", nativeQuery = true)
     List<Report> findToday(Integer userId);
 
     /**
      * 用户查询本周数据
-     * @return
      */
     @Transactional
     @Query(value = "SELECT * FROM report WHERE user_id = ? and " +
@@ -32,7 +29,6 @@ public interface ReportRepository extends JpaRepository<Report, Integer> {
 
     /**
      * 用户查询本月数据
-     * @return
      */
     @Transactional
     @Query(value = "SELECT * FROM report WHERE user_id = ? and " +

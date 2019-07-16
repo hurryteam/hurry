@@ -32,7 +32,7 @@ public class ReportController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
     })
-    public List<Report> GetReportByDay(@RequestParam("openid") String openid) throws HurryException {
+    public List<Integer> GetReportByDay(@RequestParam("openid") String openid) throws HurryException {
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
@@ -45,7 +45,7 @@ public class ReportController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true)
     })
-    public List<Report> GetReportByWeek(@RequestParam("openid") String openid) {
+    public List<Integer> GetReportByWeek(@RequestParam("openid") String openid) {
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
@@ -57,7 +57,7 @@ public class ReportController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true)
     })
-    public List<Report> GetReportByMonth(@RequestParam("openid") String openid) {
+    public List<Integer> GetReportByMonth(@RequestParam("openid") String openid) {
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
