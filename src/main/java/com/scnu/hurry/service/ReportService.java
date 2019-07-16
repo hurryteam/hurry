@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ReportService {
 
-    List<Report> findToday(String openid);
+    List<Integer> findToday(String openid);
 
-    List<Report> findThisWeek(String openid);
+    List<Integer> findThisWeek(String openid);
 
-    List<Report> findThisMonth(String openid);
+    List<Integer> findThisMonth(String openid);
 }
