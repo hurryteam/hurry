@@ -36,6 +36,8 @@ public class UserServiceImpl implements UserService {
         userInfo.setBalance(new BigDecimal(0));
         userInfo.setOpenid(openid);
         userInfo.setUrl(url);
-        userInfoRepository.saveAndFlush(userInfo);
+        UserInfo res = userInfoRepository.saveAndFlush(userInfo);
+        if (res == null)
+            throw new HurryException(ResultEnum.USER_CREATE_FAIL);
     }
 }

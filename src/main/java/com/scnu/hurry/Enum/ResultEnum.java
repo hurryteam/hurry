@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public enum ResultEnum {
     USER_NOT_FOUND(1, "用户不存在"),
-
+    USER_CREATE_FAIL(2, "用户创建失败"),
     ;
     private Integer code;
     private String msg;
