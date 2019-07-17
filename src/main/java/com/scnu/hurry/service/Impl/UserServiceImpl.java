@@ -1,5 +1,7 @@
 package com.scnu.hurry.service.Impl;
 
+import com.scnu.hurry.Enum.ResultEnum;
+import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.entity.UserInfo;
 import com.scnu.hurry.repository.UserInfoRepository;
 import com.scnu.hurry.service.UserService;
@@ -15,5 +17,15 @@ public class UserServiceImpl implements UserService {
     public boolean findUser(String openid) {
         UserInfo user = userInfoRepository.findByOpenid(openid);
         return user != null;
+    }
+
+
+    @Override
+    public String findUserPicture(String openid) {
+        UserInfo userInfo = userInfoRepository.findByOpenid(openid);
+        if (userInfo == null){
+            throw new HurryException(ResultEnum.USER_NOT_FOUND);
+        }
+        return userInfo.getUrl();
     }
 }

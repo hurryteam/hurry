@@ -7,4 +7,11 @@ public interface UserService {
      * @return
      */
     boolean findUser(String openid);
+
+    /**
+     * 查询用户头像
+     * @param openid
+     * @return
+     */
+    String findUserPicture(String openid);
 }
