@@ -7,6 +7,7 @@ import com.scnu.hurry.service.Impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +25,7 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
-    @RequestMapping("/exist")
+    @RequestMapping(value = "/exist", method = RequestMethod.GET)
     @ApiOperation(value = "检查用户是否已经注册")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
@@ -33,7 +34,7 @@ public class UserController {
         return userService.findUser(openid);
     }
 
-    @RequestMapping("/register")
+    @RequestMapping(value ="/register", method = RequestMethod.POST)
     @ApiOperation(value = "注册用户")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
