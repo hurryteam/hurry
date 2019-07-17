@@ -18,5 +18,5 @@ public interface UserService {
      * 增加用户信息
      * @param openid
      */
-    void addUser(String openid);
+    void addUser(String openid, String url);
 }

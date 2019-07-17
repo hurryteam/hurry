@@ -31,10 +31,11 @@ public class UserServiceImpl implements UserService {
 
     }
     @Override
-    public void addUser(String openid) {
+    public void addUser(String openid, String url) {
         UserInfo userInfo = new UserInfo();
         userInfo.setBalance(new BigDecimal(0));
         userInfo.setOpenid(openid);
+        userInfo.setUrl(url);
         userInfoRepository.saveAndFlush(userInfo);
     }
 }
