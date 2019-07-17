@@ -25,10 +25,11 @@ public interface QuestionService {
     /**
      * 增加问题
      *
-     * @param question
+     * @param openid
+     * @param content
      * @return
      */
-    Question addQuestion(Question question);
+    Question addQuestion(String openid, String content);
 
     /**
      * 删除帖子
