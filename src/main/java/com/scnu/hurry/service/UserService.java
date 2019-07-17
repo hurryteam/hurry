@@ -4,7 +4,13 @@ public interface UserService {
     /**
      * 查找是否存在用户
      * @param openid
-     * @return
+     * @return 是否成功
      */
     boolean findUser(String openid);
+
+    /**
+     * 增加用户信息
+     * @param openid
+     */
+    void addUser(String openid);
 }
