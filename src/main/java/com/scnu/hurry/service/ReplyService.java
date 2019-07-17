@@ -22,4 +22,14 @@ public interface ReplyService {
      */
     Page<Reply> findReplyByUserId(String openid, Pageable pageable);
 
+    /**
+     * 增加回复
+     *
+     * @param reply
+     * @return
+     */
+    Reply addReply(Reply reply);
+
+
+    void removeReply(Integer replyId);
 }

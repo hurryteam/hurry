@@ -46,4 +46,18 @@ public class ReplyServiceImpl implements ReplyService {
         Integer userId = user.getUserId();
         return repository.findByUserId(userId, pageable);
     }
+
+    @Override
+    public Reply addReply(Reply reply) {
+        Reply save = repository.save(reply);
+        if (save == null){
+            throw new HurryException(ResultEnum.REPLY_CREATE_FAIL);
+        }
+        return save;
+    }
+
+    @Override
+    public void removeReply(Integer replyId) {
+        repository.deleteById(replyId);
+    }
 }
