@@ -46,4 +46,18 @@ public class QuestionServiceImpl implements QuestionService {
         Integer userId = user.getUserId();
         return repository.findByUserId(userId, pageable);
     }
+
+
+    @Override
+    public Question addQuestion(Question question) {
+        Question addResult = repository.save(question);
+        if (addResult == null)
+            throw new HurryException(ResultEnum.QUESTION_CREAT_FAIL);
+        return question;
+    }
+
+    @Override
+    public void removeQuestion(Integer questionId) {
+        repository.deleteById(questionId);
+    }
 }

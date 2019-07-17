@@ -24,4 +24,6 @@ public class UserInfo {
     private String openid;
     @ApiModelProperty(value="用户余额", dataType = "BigDecimal")
     private BigDecimal balance;
+    @ApiModelProperty(value = "用户头像url", dataType = "String")
+    private String url;
 }

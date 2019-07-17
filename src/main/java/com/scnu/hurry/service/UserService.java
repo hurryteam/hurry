@@ -9,8 +9,14 @@ public interface UserService {
     boolean findUser(String openid);
 
     /**
+     * 查询用户头像
+     * @param openid
+     * @return
+     */
+    String findUserPicture(String openid);
+    /*
      * 增加用户信息
      * @param openid
      */
-    void addUser(String openid);
+    void addUser(String openid, String url);
 }
