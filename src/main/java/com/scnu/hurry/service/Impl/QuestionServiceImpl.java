@@ -7,6 +7,7 @@ import com.scnu.hurry.entity.UserInfo;
 import com.scnu.hurry.repository.QuestionRepository;
 import com.scnu.hurry.repository.UserInfoRepository;
 import com.scnu.hurry.service.QuestionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,9 +35,6 @@ public class QuestionServiceImpl implements QuestionService {
 
     /**
      * 用户查询自己的问题
-     * @param openid
-     * @param pageable
-     * @return
      */
     @Override
     public Page<Question> findByUserId(String openid, Pageable pageable) {
@@ -45,5 +43,26 @@ public class QuestionServiceImpl implements QuestionService {
             throw new HurryException(ResultEnum.USER_NOT_FOUND);
         Integer userId = user.getUserId();
         return repository.findByUserId(userId, pageable);
+    }
+
+
+    @Override
+    public Question addQuestion(String openid, String content) {
+        UserInfo userInfo = userInfoRepository.findByOpenid(openid);
+        if (userInfo == null) {
+            throw new HurryException(ResultEnum.USER_NOT_FOUND);
+        }
+        Question question = new Question();
+        question.setUserId(userInfo.getUserId());
+        question.setQuestionContent(content);
+        Question addResult = repository.save(question);
+        if (addResult == null)
+            throw new HurryException(ResultEnum.QUESTION_CREAT_FAIL);
+        return question;
+    }
+
+    @Override
+    public void removeQuestion(Integer questionId) {
+        repository.deleteById(questionId);
     }
 }

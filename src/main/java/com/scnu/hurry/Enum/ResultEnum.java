@@ -10,10 +10,14 @@ import lombok.Getter;
 public enum ResultEnum {
     USER_NOT_FOUND(1, "用户不存在"),
     USER_ID_ERROR(2, "openid为空"),
-    INDEX_VALUE_ERROR(3, "索引不能为负 "),
-    SIZE_VALUE_ERROR(4, "大小不能为负"),
-    QUESTION_ID_VALUE_ERROR(5, "问题id不能为负"),
-    QUESTION_NOT_FIND(6, "问题不存在");
+    USER_CREATE_FAIL(3, "用户创建失败"),
+    QUESTION_CREAT_FAIL(4, "问题创建失败"),
+    REPLY_CREATE_FAIL(5, "回复失败"),
+    INDEX_VALUE_ERROR(6, "索引不能为负 "),
+    SIZE_VALUE_ERROR(7, "大小不能为负"),
+    QUESTION_ID_VALUE_ERROR(8, "问题id不能为负"),
+    QUESTION_NOT_FIND(9, "问题不存在"),
+    REPORT_CREATE_FAIL(10, "回复创建失败")
     ;
     private Integer code;
     private String msg;

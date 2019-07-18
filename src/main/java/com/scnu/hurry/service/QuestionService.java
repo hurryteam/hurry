@@ -21,4 +21,21 @@ public interface QuestionService {
      * @return
      */
     Page<Question> findByUserId(String openid, Pageable pageable);
+
+    /**
+     * 增加问题
+     *
+     * @param openid
+     * @param content
+     * @return
+     */
+    Question addQuestion(String openid, String content);
+
+    /**
+     * 删除帖子
+     *
+     * @param questionId
+     * @return
+     */
+    void removeQuestion(Integer questionId);
 }
