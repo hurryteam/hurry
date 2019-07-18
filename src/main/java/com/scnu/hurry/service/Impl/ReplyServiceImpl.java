@@ -7,6 +7,7 @@ import com.scnu.hurry.entity.UserInfo;
 import com.scnu.hurry.repository.ReplyRepository;
 import com.scnu.hurry.repository.UserInfoRepository;
 import com.scnu.hurry.service.ReplyService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,9 +23,6 @@ public class ReplyServiceImpl implements ReplyService {
 
     /**
      * 查询问题的回答
-     * @param questionId
-     * @param pageable
-     * @return
      */
     @Override
     public Page<Reply> findByQuestionId(Integer questionId, Pageable pageable) {
@@ -34,9 +32,6 @@ public class ReplyServiceImpl implements ReplyService {
 
     /**
      * 查询用户自己的回答
-     * @param openid
-     * @param pageable
-     * @return
      */
     @Override
     public Page<Reply> findReplyByUserId(String openid, Pageable pageable) {
@@ -48,12 +43,21 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public Reply addReply(Reply reply) {
+    public Reply addReply(Integer userId, Integer questionId, String content) throws HurryException {
+        Reply reply = new Reply();
+        reply.setQuestionId(questionId);
+        reply.setReplyContent(content);
+        reply.setUserId(userId);
         Reply save = repository.save(reply);
-        if (save == null){
+        if (save == null) {
             throw new HurryException(ResultEnum.REPLY_CREATE_FAIL);
         }
         return save;
+    }
+
+    public Reply addReply(String openid, Integer questionId, String content) throws HurryException {
+        UserInfo user = userInfoRepository.findByOpenid(openid);
+        return this.addReply(user.getUserId(), questionId, content);
     }
 
     @Override

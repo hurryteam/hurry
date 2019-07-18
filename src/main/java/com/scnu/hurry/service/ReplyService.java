@@ -25,11 +25,17 @@ public interface ReplyService {
     /**
      * 增加回复
      *
-     * @param reply
+     * @param userId
+     * @param questionId
+     * @param content
      * @return
      */
-    Reply addReply(Reply reply);
+    Reply addReply(Integer userId, Integer questionId, String content);
 
 
+    /**
+     * 删除回复
+     * @param replyId
+     */
     void removeReply(Integer replyId);
 }
