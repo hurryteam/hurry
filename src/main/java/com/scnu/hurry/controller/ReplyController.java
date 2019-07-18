@@ -36,8 +36,8 @@ public class ReplyController {
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
     public List<Reply> findAllReply(@RequestParam("openid") String openid,
-                             @RequestParam("index") int index,
-                             @RequestParam("size") int size) throws HurryException {
+                                    @RequestParam("index") int index,
+                                    @RequestParam("size") int size) throws HurryException {
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
@@ -58,7 +58,7 @@ public class ReplyController {
             @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
     })
     public List<Reply> findReplyByQuestionId(@RequestParam("questionId") int questionId,
-                                      @RequestParam("index") int index) {
+                                             @RequestParam("index") int index) throws HurryException {
         if (questionId < 0) {
             throw new HurryException(ResultEnum.QUESTION_ID_VALUE_ERROR);
         }
@@ -71,10 +71,34 @@ public class ReplyController {
 
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ApiOperation(value = "添加回复", method )
+    @ApiOperation(value = "添加回复")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(value = "")
+            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "questionId", value = "问题的openid", dataType = "int", paramType = "query", required = true),
+            @ApiImplicitParam(name = "content", value = "回复内容", dataType = "String", paramType = "query", required = true)
     })
     public void addReply(@RequestParam("openid") String openid,
-                         @RequestParam("questionId") )
+                         @RequestParam("questionId") Integer questionId,
+                         @RequestParam("content") String content) throws HurryException {
+        if (openid.equals("")) {
+            throw new HurryException(ResultEnum.USER_ID_ERROR);
+        }
+        if (questionId < 0) {
+            throw new HurryException(ResultEnum.QUESTION_ID_VALUE_ERROR);
+        }
+        try {
+            replyService.addReply(openid, questionId, content);
+        } catch (HurryException e) {
+            throw e;
+        }
+    }
+
+    @RequestMapping(value = "/remove", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除回复")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "replyId", value = "回复id", dataType = "int", paramType = "query", required = true)
+    })
+    public void removeReply(@RequestParam("replyId") Integer replyId) {
+        replyService.removeReply(replyId);
+    }
 }

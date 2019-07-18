@@ -27,10 +27,7 @@ public class QuestionServiceImplTest {
 
     @Test
     public void addQuestion() {
-        Question q = new Question();
-        q.setUserId(1);
-        q.setQuestionContent("第二个问题");
-        Question question = service.addQuestion(q);
+        Question question = service.addQuestion("1", "this is a question");
         System.out.println(question);
         assertNotNull(question);
     }

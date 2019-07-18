@@ -34,8 +34,9 @@ public class QuestionController {
             @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
+
     public List<Question> getQuestions(@RequestParam("index") int index,
-                                @RequestParam("size") int size) throws HurryException {
+                                       @RequestParam("size")  int size) throws HurryException {
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
@@ -54,7 +55,7 @@ public class QuestionController {
             @ApiImplicitParam(name = "size", value = "返回的数量", dataType = "int", paramType = "query", defaultValue = "3"),
     })
     public List<Question> getQustionsByUserId(@RequestParam("openid") String openid,
-                                       @RequestParam("index") int index) {
+                                              @RequestParam("index") int index) {
         if (index < 0) {
             throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
         }
@@ -72,7 +73,7 @@ public class QuestionController {
             @ApiImplicitParam(name = "content", value = "问题内容", dataType = "String", paramType = "query")
     })
     public void addQuestion(@RequestParam("openid") String openid,
-                            @RequestParam("content") String content) throws HurryException{
+                            @RequestParam("content") String content) throws HurryException {
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }

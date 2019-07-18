@@ -36,7 +36,7 @@ public class CourseController {
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
     public List<Course> getCourseList(@RequestParam("index") int index,
-                               @RequestParam("size") int size) throws HurryException {
+                                      @RequestParam("size") int size) throws HurryException {
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
@@ -55,8 +55,8 @@ public class CourseController {
             @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
     })
     public List<Course> getCourse(@RequestParam("openid") String openid,
-                           @RequestParam("index") int index,
-                           @RequestParam("size") int size) throws HurryException {
+                                  @RequestParam("index") int index,
+                                  @RequestParam("size") int size) throws HurryException {
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
