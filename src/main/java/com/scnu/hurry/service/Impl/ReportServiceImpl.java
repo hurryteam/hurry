@@ -8,11 +8,11 @@ import com.scnu.hurry.repository.ReportRepository;
 import com.scnu.hurry.repository.UserInfoRepository;
 import com.scnu.hurry.service.ReportService;
 import com.scnu.hurry.util.TimeHandleUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -51,5 +51,30 @@ public class ReportServiceImpl implements ReportService {
         Integer userId = user.getUserId();
         List<Report> reportList = repository.findThisMonth(userId);
         return TimeHandleUtil.splitMonthTo4Week(reportList);
+    }
+
+    @Override
+    public Report addReport(Integer userId, Date date) throws HurryException{
+        Report report = new Report();
+        report.setUserId(userId);
+        report.setTime(date);
+        report = repository.save(report);
+        if (report == null) {
+            throw new HurryException(ResultEnum.REPORT_CREATE_FAIL);
+        }
+        return report;
+    }
+
+    @Override
+    public Report addReport(String openId, Date date) throws HurryException {
+        UserInfo user = userInfoRepository.findByOpenid(openId);
+        return this.addReport(user.getUserId(), date);
+    }
+
+    @Override
+    public void addReport(String openId, List<Date> dates) throws HurryException{
+        for (Date e : dates) {
+            this.addReport(openId, e);
+        }
     }
 }

@@ -2,9 +2,9 @@ package com.scnu.hurry.service;
 
 
 import com.scnu.hurry.entity.Report;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Date;
 
 public interface ReportService {
 
@@ -13,4 +13,10 @@ public interface ReportService {
     List<Integer> findThisWeek(String openid);
 
     List<Integer> findThisMonth(String openid);
+
+    Report addReport(Integer userId, Date date);
+
+    Report addReport(String openid, Date date);
+
+    void addReport(String openId, List<Date> dates);
 }
