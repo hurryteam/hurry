@@ -8,11 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 import java.math.BigDecimal;
 
 @Entity
 @Data
 @ApiModel("用户信息")
+@Table(name = "user_info")
 public class UserInfo {
 
     @Id
