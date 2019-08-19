@@ -1,10 +1,12 @@
 package com.scnu.hurry.controller;
 
+import java.util.Map;
 import com.scnu.hurry.Enum.ResultEnum;
 import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.service.Impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,16 +40,16 @@ public class UserController {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
             @ApiImplicitParam(name = "url", value = "用户头像url", dataType = "String", paramType = "query", required = true)
     })
-    public void addUser(@RequestParam("openid") String openid,
-                        @RequestParam("url") String url) throws HurryException {
-        if (openid.equals("")) {
+    public String addUser(@RequestBody Map<String, String> body) throws HurryException {
+        if (body.get("openid").equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
         try {
-            userService.addUser(openid, url);
+            userService.addUser(body.get("openid"), body.get("url"));
         } catch (HurryException e) {
             throw e;
         }
+        return "success";
     }
 
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
