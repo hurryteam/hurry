@@ -37,8 +37,7 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiOperation(value = "添加用户")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "url", value = "用户头像url", dataType = "String", paramType = "query", required = true)
+            @ApiImplicitParam(name = "body", value = "必须包含用户openid: openid, 用户图像路径: url", dataType = "json", paramType = "body", required = true)
     })
     public String addUser(@RequestBody Map<String, String> body) throws HurryException {
         if (body.get("openid").equals("")) {
