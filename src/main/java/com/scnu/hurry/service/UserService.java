@@ -8,7 +8,7 @@ public interface UserService {
      */
     boolean findUser(String openid);
 
-    /**
+    /*
      * 查询用户头像
      * @param openid
      * @return
