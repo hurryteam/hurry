@@ -38,4 +38,6 @@ public interface QuestionService {
      * @return
      */
     void removeQuestion(Integer questionId);
+
+    Question findByQuestionId(Integer questionId);
 }
