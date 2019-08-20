@@ -11,11 +11,11 @@ public interface UserService {
     boolean findUser(String openid);
 
     /*
-     * 通过openid查询用户头像
-     * @param openid
+     * 通过userId查询用户头像
+     * @param userId
      * @return
      */
-    String findUserPictureByOpenid(String openid);
+    String findUserPictureByUserId(Integer userId);
     /*
      * 增加用户信息
      * @param openid

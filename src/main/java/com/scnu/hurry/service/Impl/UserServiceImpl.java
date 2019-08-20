@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findUserPictureByOpenid(String openid) {
-        UserInfo userInfo = userInfoRepository.findByOpenid(openid);
+    public String findUserPictureByUserId(Integer userId) {
+        UserInfo userInfo = userInfoRepository.findByUserId(userId);
         if (userInfo == null) {
             throw new HurryException(ResultEnum.USER_NOT_FOUND);
         }

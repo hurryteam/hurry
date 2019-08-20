@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 
     UserInfo findByOpenid(String openid);
+    UserInfo findByUserId(Integer userId);
 }
