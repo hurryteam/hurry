@@ -19,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/user")
@@ -68,10 +69,8 @@ public class UserController {
 
     @GetMapping(value = "/avaters")
     @ApiOperation(value = "通过userid数组获取用户头像, 若不存在返回空字符串")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "userids", value = "用户的id", dataType = "Integer", paramType = "query", required = true, allowMultiple = true),
-    })
-    public List<String> getAvatarByUserId(@RequestParam("userids")List<Integer> userids) throws HurryException {
+    public List<String> getAvatarByUserId( @ApiParam(value = "userid数组")
+            @RequestParam("userids") List<Integer> userids) throws HurryException {
         ArrayList<String> urls = new ArrayList<>();
         return userService.findAllUserPictureByUserid(userids);
     }
