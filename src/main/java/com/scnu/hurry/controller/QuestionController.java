@@ -52,7 +52,7 @@ public class QuestionController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "根据用户查询其发布的问题")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "body", value = "必须包含用户openid, 还有请求索引index", dataType = "json", paramType = "body", required = true)
+            @ApiImplicitParam(name = "body", value = "含用户openid, 请求索引index", dataType = "json", paramType = "body", required = true)
     })
     public List<Question> getQustionsByUserId(@RequestBody Map<String, String> map) {
         Integer index = Integer.valueOf(map.get("index"));

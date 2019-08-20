@@ -1,11 +1,14 @@
 package com.scnu.hurry.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import com.scnu.hurry.Enum.ResultEnum;
 import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.service.Impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,14 +55,24 @@ public class UserController {
     }
 
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
-    @ApiOperation(value = "返回用户头像url")
+    @ApiOperation(value = "通过openid用户头像url")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
     })
-    public String getAvatar(@RequestParam("openid") String openid) throws HurryException {
+    public String getAvatarByOpenid(@RequestParam("openid") String openid) throws HurryException {
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
-        return userService.findUserPicture(openid);
+        return userService.findUserPictureByOpenid(openid);
+    }
+
+    @GetMapping(value = "/avaters")
+    @ApiOperation(value = "通过userid数组获取用户头像, 若不存在返回空字符串")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "userids", value = "用户的id", dataType = "Integer", paramType = "query", required = true, allowMultiple = true),
+    })
+    public List<String> getAvatarByUserId(@RequestParam("userids")List<Integer> userids) throws HurryException {
+        ArrayList<String> urls = new ArrayList<>();
+        return userService.findAllUserPictureByUserid(userids);
     }
 }
