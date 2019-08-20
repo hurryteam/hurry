@@ -66,12 +66,4 @@ public class UserController {
         }
         return userService.findUserPictureByOpenid(openid);
     }
-
-    @GetMapping(value = "/avaters")
-    @ApiOperation(value = "通过userid数组获取用户头像, 若不存在返回空字符串")
-    public List<String> getAvatarByUserId( @ApiParam(value = "userid数组")
-            @RequestParam("userids") List<Integer> userids) throws HurryException {
-        ArrayList<String> urls = new ArrayList<>();
-        return userService.findAllUserPictureByUserid(userids);
-    }
 }

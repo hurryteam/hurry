@@ -33,16 +33,6 @@ public class UserServiceImpl implements UserService {
         return userInfo.getUrl();
 
     }
-
-    @Override
-    public List<String> findAllUserPictureByUserid(List<Integer> userids) {
-        List<String> urls = new ArrayList<>();
-        userids.stream()
-               .map(userInfoRepository::findById).map(i -> i.isPresent() ? i.get().getUrl() : "")
-               .forEach(urls::add);
-        return urls;
-    }
-
     @Override
     public void addUser(String openid, String url) {
         UserInfo userInfo = new UserInfo();
