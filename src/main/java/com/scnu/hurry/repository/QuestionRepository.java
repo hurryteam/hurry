@@ -6,6 +6,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
     /**
@@ -22,4 +24,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
      * @return
      */
     Page<Question> findByUserId(Integer userId, Pageable pageable);
+
+    List<Question> findAllByQuestionIdIn(List<Integer> qIds);
 }

@@ -2,6 +2,7 @@ package com.scnu.hurry.controller;
 
 import com.scnu.hurry.Enum.ResultEnum;
 import com.scnu.hurry.Exception.HurryException;
+import com.scnu.hurry.dto.ReplyDTO;
 import com.scnu.hurry.entity.Reply;
 import com.scnu.hurry.service.Impl.ReplyServiceImpl;
 
@@ -35,7 +36,7 @@ public class ReplyController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "body", value = "必须包含用户openid: openid, 请求索引: index, 返回数量: size", dataType = "json", paramType = "body", required = true)
     })
-    public List<Reply> findAllReply(@RequestBody Map<String, String> body) throws HurryException {
+    public List<ReplyDTO> findAllReply(@RequestBody Map<String, String> body) throws HurryException {
         Integer size = Integer.valueOf(body.get("size"));
         Integer index = Integer.valueOf(body.get("index"));
         String openid = body.get("openid");
@@ -49,7 +50,7 @@ public class ReplyController {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
         Pageable pageRequest = PageRequest.of(index, size);
-        return replyService.findReplyByUserId(openid, pageRequest).getContent();
+        return replyService.findReplyByOpenId(openid, pageRequest);
     }
 
     @RequestMapping(value = "/question", method = RequestMethod.GET)

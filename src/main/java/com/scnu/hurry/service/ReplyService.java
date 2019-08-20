@@ -1,9 +1,12 @@
 package com.scnu.hurry.service;
 
+import com.scnu.hurry.dto.ReplyDTO;
 import com.scnu.hurry.entity.Reply;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface ReplyService {
 
@@ -19,6 +22,14 @@ public interface ReplyService {
      * @return
      */
     Page<Reply> findReplyByUserId(String openid, Pageable pageable);
+
+    /**
+     * 根据用户查找回复，返回ReplyDTO对象
+     * @param openid
+     * @param pageable
+     * @return
+     */
+    List<ReplyDTO> findReplyByOpenId(String openid, Pageable pageable);
 
     /**
      * 增加回复
