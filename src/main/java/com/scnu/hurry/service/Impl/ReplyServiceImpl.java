@@ -44,7 +44,6 @@ public class ReplyServiceImpl implements ReplyService {
         return repository.findByUserId(userId, pageable);
     }
 
-    @Override
     public Reply addReply(Integer userId, Integer questionId, String content) throws HurryException {
         Reply reply = new Reply();
         reply.setQuestionId(questionId);
@@ -57,6 +56,8 @@ public class ReplyServiceImpl implements ReplyService {
         return save;
     }
 
+
+    @Override
     public Reply addReply(String openid, Integer questionId, String content) throws HurryException {
         UserInfo user = userInfoRepository.findByOpenid(openid);
         return this.addReply(user.getUserId(), questionId, content);
@@ -65,5 +66,10 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void removeReply(Integer replyId) {
         repository.deleteById(replyId);
+    }
+
+    @Override
+    public void removeReplyByQuestionId(Integer questionId) {
+        repository.deleteByQuestionId(questionId);
     }
 }

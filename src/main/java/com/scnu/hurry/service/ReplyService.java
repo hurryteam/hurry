@@ -22,12 +22,12 @@ public interface ReplyService {
 
     /**
      * 增加回复
-     * @param userId
+     * @param openid
      * @param questionId
      * @param content
      * @return
      */
-    Reply addReply(Integer userId, Integer questionId, String content);
+    Reply addReply(String openid, Integer questionId, String content);
 
 
     /**
@@ -35,4 +35,10 @@ public interface ReplyService {
      * @param replyId
      */
     void removeReply(Integer replyId);
+
+    /**
+     * 根据问题ID删除回复
+     * @param questionId
+     */
+    void removeReplyByQuestionId(Integer questionId);
 }

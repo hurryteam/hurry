@@ -25,4 +25,9 @@ public interface ReplyRepository extends JpaRepository<Reply, Integer> {
      */
     Page<Reply> findByUserId(Integer userId, Pageable pageable);
 
+    /**
+     * 根据问题id删除回复
+     * @param questionId
+     */
+    void deleteByQuestionId(Integer questionId);
 }

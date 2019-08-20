@@ -31,6 +31,8 @@ public interface QuestionService {
      */
     Question addQuestion(String openid, String content);
 
+    Question addQuestion(Question q);
+
     /**
      * 删除帖子
      *

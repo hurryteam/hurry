@@ -67,6 +67,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Question addQuestion(Question q) {
+        return repository.save(q);
+    }
+
+    @Override
     public void removeQuestion(Integer questionId) {
         repository.deleteById(questionId);
     }
