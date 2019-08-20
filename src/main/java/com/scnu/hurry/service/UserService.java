@@ -22,4 +22,9 @@ public interface UserService {
      */
     void addUser(String openid, String url);
 
+    /*
+     * 通过userid查询用户头像
+     * @param userid
+     */
+    String findUserPictureByUserid(Integer userid);
 }

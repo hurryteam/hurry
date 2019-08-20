@@ -56,14 +56,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
-    @ApiOperation(value = "通过openid用户头像url")
+    @ApiOperation(value = "通过userid用户头像url")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "userid", value = "用户的userid", dataType = "int", paramType = "query", required = true),
     })
-    public String getAvatarByOpenid(@RequestParam("openid") String openid) throws HurryException {
-        if (openid.equals("")) {
+    public String getAvatarByOpenid(@RequestParam("openid") Integer userid) throws HurryException {
+        if (userid < 0) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
-        return userService.findUserPictureByOpenid(openid);
+        return userService.findUserPictureByUserid(userid);
     }
 }

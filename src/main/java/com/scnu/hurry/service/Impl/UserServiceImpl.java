@@ -43,4 +43,13 @@ public class UserServiceImpl implements UserService {
         if (res == null)
             throw new HurryException(ResultEnum.USER_CREATE_FAIL);
     }
+
+    @Override
+    public String findUserPictureByUserid(Integer userid) {
+        var opt = userInfoRepository.findById(userid);
+        if (!opt.isPresent()) {
+            throw new HurryException(ResultEnum.USER_ID_ERROR);
+        }
+        return opt.get().getUrl();
+    }
 }
