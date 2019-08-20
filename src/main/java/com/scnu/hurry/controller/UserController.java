@@ -1,10 +1,15 @@
 package com.scnu.hurry.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import com.scnu.hurry.Enum.ResultEnum;
 import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.service.Impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +19,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/user")
@@ -35,30 +41,37 @@ public class UserController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiOperation(value = "添加用户")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "url", value = "用户头像url", dataType = "String", paramType = "query", required = true)
+            @ApiImplicitParam(name = "body", value = "必须包含用户openid: openid, 用户图像路径: url", dataType = "json", paramType = "body", required = true)
     })
-    public void addUser(@RequestParam("openid") String openid,
-                        @RequestParam("url") String url) throws HurryException {
-        if (openid.equals("")) {
+    public String addUser(@RequestBody Map<String, String> body) throws HurryException {
+        if (body.get("openid").equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
         try {
-            userService.addUser(openid, url);
+            userService.addUser(body.get("openid"), body.get("url"));
         } catch (HurryException e) {
             throw e;
         }
+        return "success";
     }
 
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
-    @ApiOperation(value = "返回用户头像url")
+    @ApiOperation(value = "通过openid用户头像url")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
     })
-    public String getAvatar(@RequestParam("openid") String openid) throws HurryException {
+    public String getAvatarByOpenid(@RequestParam("openid") String openid) throws HurryException {
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
-        return userService.findUserPicture(openid);
+        return userService.findUserPictureByOpenid(openid);
+    }
+
+    @GetMapping(value = "/avaters")
+    @ApiOperation(value = "通过userid数组获取用户头像, 若不存在返回空字符串")
+    public List<String> getAvatarByUserId( @ApiParam(value = "userid数组")
+            @RequestParam("userids") List<Integer> userids) throws HurryException {
+        ArrayList<String> urls = new ArrayList<>();
+        return userService.findAllUserPictureByUserid(userids);
     }
 }

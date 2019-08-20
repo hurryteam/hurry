@@ -1,5 +1,7 @@
 package com.scnu.hurry.service;
 
+import java.util.List;
+
 public interface UserService {
     /**
      * 查找是否存在用户
@@ -9,14 +11,21 @@ public interface UserService {
     boolean findUser(String openid);
 
     /*
-     * 查询用户头像
+     * 通过openid查询用户头像
      * @param openid
      * @return
      */
-    String findUserPicture(String openid);
+    String findUserPictureByOpenid(String openid);
     /*
      * 增加用户信息
      * @param openid
      */
     void addUser(String openid, String url);
+
+    /*
+     * @通过userid查询用户头像
+     * @param userid
+     */
+    List<String> findAllUserPictureByUserid(List<Integer> userids);
+
 }

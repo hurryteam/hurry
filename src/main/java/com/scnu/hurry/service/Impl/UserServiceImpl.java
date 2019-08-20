@@ -5,10 +5,13 @@ import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.entity.UserInfo;
 import com.scnu.hurry.repository.UserInfoRepository;
 import com.scnu.hurry.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,7 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findUserPicture(String openid) {
+    public String findUserPictureByOpenid(String openid) {
         UserInfo userInfo = userInfoRepository.findByOpenid(openid);
         if (userInfo == null) {
             throw new HurryException(ResultEnum.USER_NOT_FOUND);
@@ -30,6 +33,16 @@ public class UserServiceImpl implements UserService {
         return userInfo.getUrl();
 
     }
+
+    @Override
+    public List<String> findAllUserPictureByUserid(List<Integer> userids) {
+        List<String> urls = new ArrayList<>();
+        userids.stream()
+               .map(userInfoRepository::findById).map(i -> i.isPresent() ? i.get().getUrl() : "")
+               .forEach(urls::add);
+        return urls;
+    }
+
     @Override
     public void addUser(String openid, String url) {
         UserInfo userInfo = new UserInfo();

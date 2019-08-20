@@ -8,12 +8,14 @@ import com.scnu.hurry.service.Impl.QuestionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -36,7 +38,7 @@ public class QuestionController {
     })
 
     public List<Question> getQuestions(@RequestParam("index") int index,
-                                       @RequestParam("size")  int size) throws HurryException {
+                                       @RequestParam("size") int size) throws HurryException {
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
@@ -50,35 +52,31 @@ public class QuestionController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "根据用户查询其发布的问题")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "size", value = "返回的数量", dataType = "int", paramType = "query", defaultValue = "3"),
+            @ApiImplicitParam(name = "body", value = "含用户openid, 请求索引index", dataType = "json", paramType = "body", required = true)
     })
-    public List<Question> getQustionsByUserId(@RequestParam("openid") String openid,
-                                              @RequestParam("index") int index) {
+    public List<Question> getQustionsByUserId(@RequestBody Map<String, String> map) {
+        Integer index = Integer.valueOf(map.get("index"));
         if (index < 0) {
             throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
         }
-        if (openid.equals("")) {
+        if (map.get("openid").equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
         Pageable pageRequest = PageRequest.of(index, 3);
-        return questionService.findByUserId(openid, pageRequest).getContent();
+        return questionService.findByUserId(map.get("openid"), pageRequest).getContent();
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiOperation(value = "添加问题")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "content", value = "问题内容", dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "body", value = "必须包含用户openid, 还有内容content", dataType = "json", paramType = "body", required = true)
     })
-    public void addQuestion(@RequestParam("openid") String openid,
-                            @RequestParam("content") String content) throws HurryException {
-        if (openid.equals("")) {
+    public void addQuestion(@RequestBody Map<String, String> body) throws HurryException {
+        if (body.get("openid").equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
         try {
-            questionService.addQuestion(openid, content);
+            questionService.addQuestion(body.get("openid"), body.get("content"));
         } catch (HurryException e) {
             throw e;
         }

@@ -17,7 +17,8 @@ public enum ResultEnum {
     SIZE_VALUE_ERROR(7, "大小不能为负"),
     QUESTION_ID_VALUE_ERROR(8, "问题id不能为负"),
     QUESTION_NOT_FIND(9, "问题不存在"),
-    REPORT_CREATE_FAIL(10, "回复创建失败")
+    REPORT_CREATE_FAIL(10, "回复创建失败"),
+    DATE_PARSE_ERROR(11, "日期格式错误");
     ;
     private Integer code;
     private String msg;

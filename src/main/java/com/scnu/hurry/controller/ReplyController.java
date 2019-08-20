@@ -8,12 +8,14 @@ import com.scnu.hurry.service.Impl.ReplyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -31,13 +33,12 @@ public class ReplyController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "查询用户自己的回答", notes = "根据用户的openid传回size个回复")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "size", value = "返回课程数量", dataType = "int", paramType = "query", defaultValue = "3")
+            @ApiImplicitParam(name = "body", value = "必须包含用户openid: openid, 请求索引: index, 返回数量: size", dataType = "json", paramType = "body", required = true)
     })
-    public List<Reply> findAllReply(@RequestParam("openid") String openid,
-                                    @RequestParam("index") int index,
-                                    @RequestParam("size") int size) throws HurryException {
+    public List<Reply> findAllReply(@RequestBody Map<String, String> body) throws HurryException {
+        Integer size = Integer.valueOf(body.get("size"));
+        Integer index = Integer.valueOf(body.get("index"));
+        String openid = body.get("openid");
         if (size < 0) {
             throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
@@ -73,13 +74,12 @@ public class ReplyController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiOperation(value = "添加回复")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "openid", value = "用户的openid", dataType = "String", paramType = "query", required = true),
-            @ApiImplicitParam(name = "questionId", value = "问题的openid", dataType = "int", paramType = "query", required = true),
-            @ApiImplicitParam(name = "content", value = "回复内容", dataType = "String", paramType = "query", required = true)
+            @ApiImplicitParam(name = "body", value = "必须包含用户openid, 问题Id: questionId, 内容: content", dataType = "json", paramType = "body", required = true)
     })
-    public void addReply(@RequestParam("openid") String openid,
-                         @RequestParam("questionId") Integer questionId,
-                         @RequestParam("content") String content) throws HurryException {
+    public void addReply(@RequestBody Map<String, String> body) throws HurryException {
+        String openid = body.get("openid");
+        Integer questionId = Integer.valueOf(body.get("questionid"));
+        String content = body.get("content");
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
