@@ -1,14 +1,11 @@
 package com.scnu.hurry.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import com.scnu.hurry.Enum.ResultEnum;
 import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.service.Impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/user")

@@ -44,15 +44,12 @@ public class ReplyServiceImpl implements ReplyService {
         return repository.findByUserId(userId, pageable);
     }
 
-    public Reply addReply(Integer userId, Integer questionId, String content) throws HurryException {
+    public Reply addReply(Integer userId, Integer questionId, String content) {
         Reply reply = new Reply();
         reply.setQuestionId(questionId);
         reply.setReplyContent(content);
         reply.setUserId(userId);
-        Reply save = repository.save(reply);
-        if (save == null) {
-            throw new HurryException(ResultEnum.REPLY_CREATE_FAIL);
-        }
+        Reply save = repository.saveAndFlush(reply);
         return save;
     }
 
@@ -60,6 +57,9 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public Reply addReply(String openid, Integer questionId, String content) throws HurryException {
         UserInfo user = userInfoRepository.findByOpenid(openid);
+        if (user == null) {
+            throw new HurryException(ResultEnum.USER_NOT_FOUND);
+        }
         return this.addReply(user.getUserId(), questionId, content);
     }
 
