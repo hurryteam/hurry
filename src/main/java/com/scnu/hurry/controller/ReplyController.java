@@ -101,7 +101,8 @@ public class ReplyController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "replyId", value = "回复id", dataType = "int", paramType = "query", required = true)
     })
-    public void removeReply(@RequestParam("replyId") Integer replyId) {
-        replyService.removeReply(replyId);
+    public String removeReply(@RequestBody Map<String, String> body) {
+        replyService.removeReply(Integer.parseInt(body.get("replyId")));
+        return "success";
     }
 }

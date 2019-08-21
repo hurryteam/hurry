@@ -93,8 +93,8 @@ public class QuestionController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "questionId", value = "问题的Id", dataType = "Integer", paramType = "query", required = true)
     })
-    public String removeQuestion(@RequestParam("questionId") String questionId) throws HurryException {
-        Integer id = Integer.parseInt(questionId); 
+    public String removeQuestion(@RequestBody Map<String, String> body) throws HurryException {
+        Integer id = Integer.parseInt(body.get("questionId"));
         if (id< 0) {
             throw new HurryException(ResultEnum.QUESTION_ID_VALUE_ERROR);
         }
