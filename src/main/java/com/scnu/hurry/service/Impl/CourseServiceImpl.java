@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.data.domain.Example;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,5 +52,18 @@ public class CourseServiceImpl implements CourseService {
                 .collect(Collectors.toList());
         Page<Course> courseList = courseRepository.findByCourseIdIn(userCourseIdList, pageable);
         return courseList;
+    }
+
+    @Override
+    public boolean checkIsUserSelect(Integer courseId, String openId) throws HurryException{
+        UserInfo user = userInfoRepository.findByOpenid(openId);
+        if (user == null) {
+            throw new HurryException(ResultEnum.USER_NOT_FOUND);
+        }
+        Selection pat = new Selection();
+        pat.setUserId(user.getUserId());
+        pat.setCourseId(courseId);
+        Example<Selection> exp = Example.of(pat);
+        return selectionRepository.exists(exp);
     }
 }

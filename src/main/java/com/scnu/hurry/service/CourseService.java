@@ -18,4 +18,9 @@ public interface CourseService {
      * @return
      */
     Page<Course> findUserCourse(String openid, Pageable pageable);
+
+    /**
+     * 查询用户是否选了某门课程
+     */
+    boolean checkIsUserSelect(Integer courseId, String openId);
 }
