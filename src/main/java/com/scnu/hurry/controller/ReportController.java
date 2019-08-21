@@ -100,7 +100,7 @@ public class ReportController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "body", value = "必须包含用户openid, 日期数组: dates(格式都为yyyy-mm-dd-HH)", dataType = "json", paramType = "body", required = true)
     })
-    public String addReports(@RequestBody Map<String, Object> body) throws HurryException{
+    public String addReports(@RequestBody Map<String, Object> body) throws HurryException {
         try {
             String openid = (String)body.get("openid");
             String[] datesStr = (String[]) body.get("dates");
