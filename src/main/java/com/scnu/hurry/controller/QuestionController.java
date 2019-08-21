@@ -30,7 +30,7 @@ public class QuestionController {
     @Autowired
     QuestionServiceImpl questionService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "返回所有的问题")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "index", value = "请求的索引(从0开始)", dataType = "int", paramType = "query", required = true),
@@ -49,20 +49,24 @@ public class QuestionController {
         return questionService.findAll(pageRequest).getContent();
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
     @ApiOperation(value = "根据用户查询其发布的问题")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "body", value = "含用户openid, 请求索引index", dataType = "json", paramType = "body", required = true)
     })
     public List<Question> getQustionsByUserId(@RequestBody Map<String, String> map) {
         Integer index = Integer.valueOf(map.get("index"));
+        Integer size = Integer.valueOf(map.get("size"));
         if (index < 0) {
             throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
+        }
+        if (size < 0){
+            throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
         if (map.get("openid").equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
-        Pageable pageRequest = PageRequest.of(index, 3);
+        Pageable pageRequest = PageRequest.of(index, size);
         return questionService.findByUserId(map.get("openid"), pageRequest).getContent();
     }
 
@@ -82,7 +86,7 @@ public class QuestionController {
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ApiOperation(value = "删除问题")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "questionId", value = "问题的Id", dataType = "Integer", paramType = "query", required = true)
