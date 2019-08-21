@@ -36,9 +36,10 @@ public class ReplyServiceImpl implements ReplyService {
      */
     @Override
     public Page<Reply> findByQuestionId(Integer questionId, Pageable pageable) {
-        if (!repository.existsById(questionId)) {
-            throw new HurryException(ResultEnum.QUESTION_NOT_FIND);
-        }
+        //此处为bug， 不能用replyId 判断 questionId
+//        if (!repository.existsById(questionId)) {
+//            throw new HurryException(ResultEnum.QUESTION_NOT_FIND);
+//        }
         return repository.findByQuestionId(questionId, pageable);
     }
 
@@ -96,6 +97,7 @@ public class ReplyServiceImpl implements ReplyService {
             for (Question q : questions){
                 if (q.getQuestionId().equals(reply.getQuestionId())){
                     replyDTO.setQuestionContent(q.getQuestionContent());
+                    replyDTO.setQuestionUserId(q.getUserId());
                 }
             }
             replyDTOS.add(replyDTO);
