@@ -12,4 +12,5 @@ public class ReplyDTO {
     private String replyContent;
     //回复对应的问题
     private String questionContent;
+    private Integer questionUserId;
 }

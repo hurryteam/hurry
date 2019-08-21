@@ -1,10 +1,12 @@
 package com.scnu.hurry.service;
 
 import com.scnu.hurry.dto.ReplyDTO;
+import com.scnu.hurry.entity.Reply;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -21,6 +23,9 @@ public class ReplyServiceTest {
 
     @Test
     public void findByQuestionId() {
+        Pageable pageable = PageRequest.of(0,3);
+        Page<Reply> byQuestionId = replyService.findByQuestionId(7, pageable);
+        byQuestionId.getContent().forEach(System.out::println);
     }
 
     @Test
