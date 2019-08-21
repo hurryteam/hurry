@@ -77,10 +77,11 @@ public class ReplyController {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "body", value = "必须包含用户openid, 问题Id: questionId, 内容: content", dataType = "json", paramType = "body", required = true)
     })
-    public void addReply(@RequestBody Map<String, String> body) throws HurryException {
+    public String addReply(@RequestBody Map<String, String> body) throws HurryException {
         String openid = body.get("openid");
-        Integer questionId = Integer.valueOf(body.get("questionid"));
+        Integer questionId = Integer.valueOf(body.get("questionId"));
         String content = body.get("content");
+        System.out.println(body);
         if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
@@ -92,6 +93,7 @@ public class ReplyController {
         } catch (HurryException e) {
             throw e;
         }
+        return "success";
     }
 
     @RequestMapping(value = "/remove", method = RequestMethod.DELETE)

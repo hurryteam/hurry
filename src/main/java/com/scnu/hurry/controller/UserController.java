@@ -1,14 +1,11 @@
 package com.scnu.hurry.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import com.scnu.hurry.Enum.ResultEnum;
 import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.service.Impl.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/user")
@@ -56,22 +52,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/avatar", method = RequestMethod.GET)
-    @ApiOperation(value = "通过userId用户头像url")
+    @ApiOperation(value = "通过userid用户头像url")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "userId", value = "用户的userId", dataType = "String", paramType = "query", required = true),
+            @ApiImplicitParam(name = "userid", value = "用户的userid", dataType = "int", paramType = "query", required = true),
     })
-    public String getAvatarByUserId(@RequestParam("userId") Integer userId) throws HurryException {
-        if (userId < 0) {
+    public String getAvatarByOpenid(@RequestParam("openid") Integer userid) throws HurryException {
+        if (userid < 0) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
         }
-        return userService.findUserPictureByUserId(userId);
-    }
-
-    @GetMapping(value = "/avaters")
-    @ApiOperation(value = "通过userid数组获取用户头像, 若不存在返回空字符串")
-    public List<String> getAvatarByUserId( @ApiParam(value = "userid数组")
-            @RequestParam("userids") List<Integer> userids) throws HurryException {
-        ArrayList<String> urls = new ArrayList<>();
-        return userService.findAllUserPictureByUserid(userids);
+        return userService.findUserPictureByUserid(userid);
     }
 }
