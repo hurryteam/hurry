@@ -52,18 +52,23 @@ public class QuestionController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ApiOperation(value = "根据用户查询其发布的问题")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "body", value = "含用户openid, 请求索引index", dataType = "json", paramType = "body", required = true)
+            @ApiImplicitParam(name = "body", value = "含用户openid: openid, 请求索引: index, 返回数量: size", dataType = "json", paramType = "body", required = true)
     })
     public List<Question> getQustionsByUserId(@RequestBody Map<String, String> map) {
         Integer index = Integer.valueOf(map.get("index"));
+        Integer size = Integer.valueOf(map.get("size"));
+        String openid = map.get("openid");
         if (index < 0) {
             throw new HurryException(ResultEnum.INDEX_VALUE_ERROR);
         }
-        if (map.get("openid").equals("")) {
+        if (openid.equals("")) {
             throw new HurryException(ResultEnum.USER_ID_ERROR);
+        } 
+        if (size < 0) {
+            throw new HurryException(ResultEnum.SIZE_VALUE_ERROR);
         }
-        Pageable pageRequest = PageRequest.of(index, 3);
-        return questionService.findByUserId(map.get("openid"), pageRequest).getContent();
+        Pageable pageRequest = PageRequest.of(index, size);
+        return questionService.findByUserId(openid, pageRequest).getContent();
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
