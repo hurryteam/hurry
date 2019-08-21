@@ -33,16 +33,6 @@ public class UserServiceImpl implements UserService {
         return userInfo.getUrl();
 
     }
-
-    @Override
-    public List<String> findAllUserPictureByUserid(List<Integer> userids) {
-        List<String> urls = new ArrayList<>();
-        userids.stream()
-               .map(userInfoRepository::findById).map(i -> i.isPresent() ? i.get().getUrl() : "")
-               .forEach(urls::add);
-        return urls;
-    }
-
     @Override
     public void addUser(String openid, String url) {
         UserInfo userInfo = new UserInfo();
@@ -52,5 +42,14 @@ public class UserServiceImpl implements UserService {
         UserInfo res = userInfoRepository.saveAndFlush(userInfo);
         if (res == null)
             throw new HurryException(ResultEnum.USER_CREATE_FAIL);
+    }
+
+    @Override
+    public String findUserPictureByUserid(Integer userid) {
+        var opt = userInfoRepository.findById(userid);
+        if (!opt.isPresent()) {
+            throw new HurryException(ResultEnum.USER_ID_ERROR);
+        }
+        return opt.get().getUrl();
     }
 }
