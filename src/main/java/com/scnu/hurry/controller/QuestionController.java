@@ -4,6 +4,7 @@ import com.scnu.hurry.Enum.ResultEnum;
 import com.scnu.hurry.Exception.HurryException;
 import com.scnu.hurry.entity.Question;
 import com.scnu.hurry.service.Impl.QuestionServiceImpl;
+import com.scnu.hurry.service.Impl.ReplyServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,9 @@ public class QuestionController {
 
     @Autowired
     QuestionServiceImpl questionService;
+
+    @Autowired
+    ReplyServiceImpl replyServiceImpl;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ApiOperation(value = "返回所有的问题")
@@ -91,14 +95,15 @@ public class QuestionController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ApiOperation(value = "删除问题")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "questionId", value = "问题的Id", dataType = "Integer", paramType = "query", required = true)
+            @ApiImplicitParam(name = "query", value = "包含问题的Id: questionId", dataType = "json", paramType = "body", required = true)
     })
-    public String removeQuestion(@RequestBody Map<String, String> body) throws HurryException {
-        Integer id = Integer.parseInt(body.get("questionId"));
+    public String removeQuestion(@RequestBody Map<String, String> query) throws HurryException {
+        Integer id = Integer.parseInt(query.get("questionId"));
         if (id< 0) {
             throw new HurryException(ResultEnum.QUESTION_ID_VALUE_ERROR);
         }
         questionService.removeQuestion(id);
+        replyServiceImpl.removeReplyByQuestionId(id);
         return "success";
     }
 }
